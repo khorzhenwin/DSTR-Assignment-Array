@@ -26,5 +26,29 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="centre.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="archive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="subject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tutor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dashboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
