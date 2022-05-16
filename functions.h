@@ -62,4 +62,30 @@ int getDateDifference(std::string date1, std::string date2)
     return differenceDays;
 }
 
+// grow array
+template <class T>
+void growArray(T *&array, int &size)
+{
+    T *newArray = new T[size + 1];
+    for (int i = 0; i < size; i++)
+    {
+        newArray[i] = array[i];
+    }
+    delete[] array;
+    array = newArray;
+    size++;
+}
+
+// ---------------------------------------------- Searching Alorithm ----------------------------------------------
+
+// ---------------------------------------------- CRUD Functions ----------------------------------------------
+
+// create new Object at the end of the array from class template using growArray helper function
+template <class T>
+void createObject(T *&array, int &size, T *newObject)
+{
+    growArray(array, size);
+    array[size - 1] = *newObject;
+}
+
 #endif // PCH_H
