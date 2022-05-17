@@ -76,6 +76,20 @@ void growArray(T *&array, int &size)
     size++;
 }
 
+// shrink array
+template <class T>
+void shrinkArray(T *&array, int &size)
+{
+    T *newArray = new T[size - 1];
+    for (int i = 0; i < size - 1; i++)
+    {
+        newArray[i] = array[i];
+    }
+    delete[] array;
+    array = newArray;
+    size--;
+}
+
 // ---------------------------------------------- Searching Alorithm ----------------------------------------------
 
 // ---------------------------------------------- CRUD Functions ----------------------------------------------
