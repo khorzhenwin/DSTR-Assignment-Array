@@ -90,7 +90,76 @@ void shrinkArray(T *&array, int &size)
     size--;
 }
 
+// login function that uses linearSearchlogin
+template <class User>
+User login(User *userArray, int size)
+{
+    std::string username;
+    std::string password;
+    std::cout << "Welcome to eXcel Tuition Management System" << std::endl;
+    std::cout << "Please login to proceed" << std::endl;
+    std::cout << "Username: ";
+    std::cin >> username;
+    std::cout << "Password: ";
+    std::cin >> password;
+    std::cout << std::endl;
+    int index = linearSearchLogin(userArray, size, username, password);
+    while (index == -1)
+    {
+        system("cls");
+        std::cout << "Username or password is incorrect. Please try again." << std::endl;
+        std::cout << "Username: ";
+        std::cin >> username;
+        std::cout << "Password: ";
+        std::cin >> password;
+        std::cout << std::endl;
+        index = linearSearchLogin(userArray, size, username, password);
+    }
+    std::cout << "Login Successful!" << std::endl;
+    std::cout << "Welcome User: " << userArray[index].username << "!" << std::endl;
+    std::cout << std::endl;
+    return userArray[index];
+}
+
 // ---------------------------------------------- Searching Alorithm ----------------------------------------------
+// binary search for int id in array and return object
+template <class T>
+int binarySearch(T *array, int size, int id)
+{
+    int low = 0;
+    int high = size - 1;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (array[mid].id == id)
+        {
+            return array[mid];
+        }
+        else if (array[mid].id < id)
+        {
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    return T.id;
+}
+
+// linear search for login username and password in array and return object
+template <class T>
+int linearSearchLogin(T *array, int size, std::string username, std::string password)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (array[i].username == username && array[i].password == password)
+        {
+            return array[i].index;
+        }
+    }
+    return -1;
+}
 
 // ---------------------------------------------- CRUD Functions ----------------------------------------------
 
@@ -100,6 +169,23 @@ void createObject(T *&array, int &size, T *newObject)
 {
     growArray(array, size);
     array[size - 1] = *newObject;
+}
+
+// delete object
+template <class T>
+void deleteObject(T *&array, int &size, int index)
+{
+    if (index > size - 1 || index < 0)
+    {
+        std::cout << "Error: index out of range" << std::endl;
+        return;
+    }
+    for (int i = index; i < size; i++)
+    {
+        array[i] = array[i + 1];
+        array[i].index = i;
+    }
+    shrinkArray(array, size);
 }
 
 #endif // PCH_H

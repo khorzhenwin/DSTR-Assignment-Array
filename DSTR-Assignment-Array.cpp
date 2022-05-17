@@ -55,9 +55,18 @@ int main()
     Subject *subject = new Subject[5];
     Centre *centre = new Centre[5];
     Tutor *tutor = new Tutor[15];
-    int userArraySize, subjectArraySize = 5;
+    int userArraySize = 5;
+    int subjectArraySize = 5;
     int centreArraySize = 3;
     int tutorArraySize = 15;
 
     generateMockData(user, subject, centre, tutor);
+
+    User userLogin = login(user, userArraySize);
+    // cout all userlogin attributes
+    cout << "Index: " << userLogin.index << endl;
+    cout << "User ID: " << userLogin.id << endl;
+    cout << "User Name: " << userLogin.username << endl;
+    cout << "Password: " << userLogin.password << endl;
+    cout << "User Type: " << userLogin.userType << endl;
 }
