@@ -128,12 +128,18 @@ int binarySearch(T *array, int size, int id)
 {
     int low = 0;
     int high = size - 1;
+
+    if (size == 0 || id < array[low].id || id > array[high].id)
+    {
+        return -1;
+    }
+
     while (low <= high)
     {
         int mid = (low + high) / 2;
         if (array[mid].id == id)
         {
-            return array[mid];
+            return array[mid].index;
         }
         else if (array[mid].id < id)
         {
@@ -144,7 +150,7 @@ int binarySearch(T *array, int size, int id)
             high = mid - 1;
         }
     }
-    return T.id;
+    return -1;
 }
 
 // linear search for login username and password in array and return object
@@ -154,6 +160,19 @@ int linearSearchLogin(T *array, int size, std::string username, std::string pass
     for (int i = 0; i < size; i++)
     {
         if (array[i].username == username && array[i].password == password)
+        {
+            return array[i].index;
+        }
+    }
+    return -1;
+}
+
+template <class Centre>
+int linearSearchCentre(Centre *array, int size, int adminId)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (array[i].adminId == adminId)
         {
             return array[i].index;
         }
@@ -186,6 +205,7 @@ void deleteObject(T *&array, int &size, int index)
         array[i].index = i;
     }
     shrinkArray(array, size);
+    std::cout << "Object at index: " << index << " deleted successfully!" << std::endl;
 }
 
 #endif // PCH_H

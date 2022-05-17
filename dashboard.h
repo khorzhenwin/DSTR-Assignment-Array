@@ -142,7 +142,7 @@ int searchTutorDashboard(int userType)
 }
 
 // ---------------------------------------------- Dashboards ----------------------------------------------
-void displayHrMenu()
+void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, Tutor *tutorArray, int &userArraySize, int &subjectArraySize, int &centreArraySize, int &tutorArraySize)
 {
     int choice, tutorViewChoice, searchTutorChoice;
     std::cout << "1 - Manage Users" << std::endl;
@@ -175,32 +175,37 @@ void displayHrMenu()
         if (choice == 1)
         {
             std::cout << std::endl;
-            displayHrMenu();
+            displayUserList(userArray, userArraySize, 1);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // search user
         else if (choice == 2)
         {
-            displayHrMenu();
+            searchUser(userArray, userArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // add user
         else if (choice == 3)
         {
-            displayHrMenu();
+            addUser(userArray, userArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // edit user
         else if (choice == 4)
         {
-            displayHrMenu();
+            updateUser(userArray, userArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // delete user
         else if (choice == 5)
         {
-            displayHrMenu();
+            deleteUser(userArray, userArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         else if (choice == 6)
         {
             system("cls");
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // ---------------------------------------------------------------------------------- Manage Centres ----------------------------------------------------------------------------------
     case 2:
@@ -209,32 +214,37 @@ void displayHrMenu()
         if (choice == 1)
         {
             std::cout << std::endl;
-            displayHrMenu();
+            displayCentreList(centreArray, centreArraySize, 1);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // search centre
         else if (choice == 2)
         {
-            displayHrMenu();
+            searchCentre(centreArray, centreArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // add Centre
         else if (choice == 3)
         {
-            displayHrMenu();
+            addCentre(centreArray, centreArraySize, userArray, userArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // edit centre
         else if (choice == 4)
         {
-            displayHrMenu();
+            updateCentre(centreArray, centreArraySize, userArray, userArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // delete centre
         else if (choice == 5)
         {
-            displayHrMenu();
+            deleteCentre(centreArray, centreArraySize);
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         else if (choice == 6)
         {
             system("cls");
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
     case 3:
         // ---------------------------------------------------------------------------------- Manage Subjects ----------------------------------------------------------------------------------
@@ -243,32 +253,32 @@ void displayHrMenu()
         if (choice == 1)
         {
             std::cout << std::endl;
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // search subject
         else if (choice == 2)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // add Subject
         else if (choice == 3)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // edit subject
         else if (choice == 4)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // delete subject
         else if (choice == 5)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         else if (choice == 6)
         {
             system("cls");
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
     case 4:
         // ---------------------------------------------------------------------------------- Manage Tutors ----------------------------------------------------------------------------------
@@ -281,22 +291,22 @@ void displayHrMenu()
             // view tutors sorted by ID
             if (tutorViewChoice == 1)
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // view tutors sorted by hourly pay rate
             else if (tutorViewChoice == 2)
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // view tutors sorted by rating
             else if (tutorViewChoice == 3)
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // back to main menu
             else
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
         }
         // search tutor
@@ -307,58 +317,58 @@ void displayHrMenu()
             // search tutor by ID
             if (searchTutorChoice == 1)
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // filter by Rating
             else if (searchTutorChoice == 2)
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // filter by Subject ID
             else if (searchTutorChoice == 3)
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // filter by Centre ID
             else if (searchTutorChoice == 4)
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // back to main menu
             else
             {
-                displayHrMenu();
+                displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
         }
         // add Tutor
         else if (choice == 3)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // edit tutor
         else if (choice == 4)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // delete tutor
         else if (choice == 5)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         else if (choice == 6)
         {
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         else if (choice == 7)
         {
             system("cls");
-            displayHrMenu();
+            displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
     case 5:
         // ---------------------------------------------------------------------------------- Add Ratings ----------------------------------------------------------------------------------
-        displayHrMenu();
+        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 6:
-        displayHrMenu();
+        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 7:
         std::cout << "Exiting program..." << std::endl;
         exit(0);

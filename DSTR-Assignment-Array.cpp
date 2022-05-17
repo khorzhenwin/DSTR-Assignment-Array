@@ -12,11 +12,21 @@ using namespace std;
 void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreArray, Tutor *&tutorArray)
 {
     // create mock data
-    userArray[0] = User(0, 0, "admin1", "123", 1);
-    userArray[1] = User(1, 1, "admin2", "123", 1);
-    userArray[2] = User(2, 2, "hr", "123", 0);
-    userArray[3] = User(3, 3, "tutor1", "123", 2);
-    userArray[4] = User(4, 4, "admin3", "123", 1);
+    userArray[0] = User(0, 0, "hr1", "123", 0);
+    userArray[1] = User(1, 1, "hr2", "123", 0);
+    userArray[2] = User(2, 2, "hr3", "123", 0);
+    userArray[3] = User(3, 3, "hr4", "123", 0);
+    userArray[4] = User(4, 4, "admin1", "123", 1);
+    userArray[5] = User(5, 5, "admin2", "123", 1);
+    userArray[6] = User(6, 6, "admin3", "123", 1);
+    userArray[7] = User(7, 7, "admin4", "123", 1);
+    userArray[8] = User(8, 8, "admin5", "123", 1);
+    userArray[9] = User(9, 9, "admin6", "123", 1);
+    userArray[10] = User(10, 10, "tutor1", "123", 2);
+    userArray[11] = User(11, 11, "tutor2", "123", 2);
+    userArray[12] = User(12, 12, "tutor3", "123", 2);
+    userArray[13] = User(13, 13, "tutor4", "123", 2);
+    userArray[14] = User(14, 14, "tutor5", "123", 2);
 
     subjectArray[0] = Subject(0, 0, "Math", 20);
     subjectArray[1] = Subject(1, 1, "English", 18);
@@ -24,9 +34,9 @@ void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreA
     subjectArray[3] = Subject(3, 3, "History", 16);
     subjectArray[4] = Subject(4, 4, "Geography", 15);
 
-    centreArray[0] = Centre(0, 0, "Centre 1", "Bukit Jalil", 0);
-    centreArray[1] = Centre(1, 1, "Centre 2", "Sri Petaling", 1);
-    centreArray[2] = Centre(2, 2, "Centre 3", "Kuchai Lama", 4);
+    centreArray[0] = Centre(0, 0, "Centre 1", "Bukit Jalil", 4);
+    centreArray[1] = Centre(1, 1, "Centre 2", "Sri Petaling", 5);
+    centreArray[2] = Centre(2, 2, "Centre 3", "Kuchai Lama", 6);
 
     tutorArray[0] = Tutor(0, 0, "Alan Doe", "ParkHill, Bukit Jalil", "+60123456789", "15/03/2020", "15/03/2021", 100, 20, 0, 0);
     tutorArray[1] = Tutor(1, 1, "Alfred Wyoming", "Pinnacle, Sri Petaling", "+60123456788", "03/08/2021", "", 80, 20, 0, 1);
@@ -51,22 +61,28 @@ void archiveTerminated();
 
 int main()
 {
-    User *user = new User[5];
-    Subject *subject = new Subject[5];
-    Centre *centre = new Centre[5];
-    Tutor *tutor = new Tutor[15];
-    int userArraySize = 5;
+    User *userArray = new User[15];
+    Subject *subjectArray = new Subject[5];
+    Centre *centreArray = new Centre[5];
+    Tutor *tutorArray = new Tutor[15];
+    int userArraySize = 15;
     int subjectArraySize = 5;
     int centreArraySize = 3;
     int tutorArraySize = 15;
 
-    generateMockData(user, subject, centre, tutor);
+    generateMockData(userArray, subjectArray, centreArray, tutorArray);
 
-    User userLogin = login(user, userArraySize);
-    // cout all userlogin attributes
-    cout << "Index: " << userLogin.index << endl;
-    cout << "User ID: " << userLogin.id << endl;
-    cout << "User Name: " << userLogin.username << endl;
-    cout << "Password: " << userLogin.password << endl;
-    cout << "User Type: " << userLogin.userType << endl;
+    User userLogin = login(userArray, userArraySize);
+    if (userLogin.userType == 0)
+    {
+        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    }
+    else if (userLogin.userType == 1)
+    {
+    }
+    else
+    {
+    }
+
+    return 0;
 }
