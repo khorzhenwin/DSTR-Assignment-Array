@@ -322,6 +322,7 @@ void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, 
             // search tutor by ID
             if (searchTutorChoice == 1)
             {
+                searchTutorById(-1, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // filter by Rating
@@ -348,21 +349,25 @@ void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, 
         // add Tutor
         else if (choice == 3)
         {
+            addTutor(-1, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // edit tutor
         else if (choice == 4)
         {
+            updateTutor(-1, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // delete tutor
         else if (choice == 5)
         {
+            deleteTutor(tutorArray, tutorArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // terminate tutor
         else if (choice == 6)
         {
+            terminateTutor(-1, tutorArray, tutorArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         else if (choice == 7)
@@ -372,6 +377,7 @@ void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, 
         }
     case 5:
         // ---------------------------------------------------------------------------------- Add Ratings ----------------------------------------------------------------------------------
+        addRating(-1, tutorArray, tutorArraySize);
         displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 6:
         displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
