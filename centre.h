@@ -220,13 +220,30 @@ void updateCentre(Centre *&centreArray, int &centreSize, User *&userArray, int &
         bool flag = true;
         while (flag)
         {
-            int adminIndex = binarySearch(userArray, userSize, adminId);
-            if (userArray[adminIndex].userType != 1 || adminIndex == -1)
+            int userExist = binarySearch(userArray, userSize, adminId);
+            int adminExist = linearSearchCentre(centreArray, centreSize, adminId);
+
+            if (userExist == -1)
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "User does not exist" << std::endl;
+                std::cout << "Enter the admin id: ";
+                std::cin >> adminId;
+            }
+            else if (adminExist != -1)
+            {
+                std::cout << "Admin is already in charge of a centre" << std::endl;
+                std::cout << "Enter the admin id: ";
+                std::cin >> adminId;
+            }
+            else if (userArray[userExist].userType != 1)
             {
                 std::cout << "User is not an admin" << std::endl;
                 std::cout << "Enter the admin id: ";
                 std::cin >> adminId;
             }
+
             else
             {
                 flag = false;

@@ -253,26 +253,31 @@ void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, 
         if (choice == 1)
         {
             std::cout << std::endl;
+            displaySubjectList(subjectArray, subjectArraySize, 1);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // search subject
         else if (choice == 2)
         {
+            searchSubject(subjectArray, subjectArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // add Subject
         else if (choice == 3)
         {
+            addSubject(subjectArray, subjectArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // edit subject
         else if (choice == 4)
         {
+            updateSubject(subjectArray, subjectArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // delete subject
         else if (choice == 5)
         {
+            deleteSubject(subjectArray, subjectArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         else if (choice == 6)

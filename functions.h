@@ -199,7 +199,7 @@ void deleteObject(T *&array, int &size, int index)
         std::cout << "Error: index out of range" << std::endl;
         return;
     }
-    for (int i = index; i < size; i++)
+    for (int i = index; i < size - 1; i++)
     {
         array[i] = array[i + 1];
         array[i].index = i;

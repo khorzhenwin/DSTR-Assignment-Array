@@ -32,7 +32,7 @@ void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreA
     subjectArray[1] = Subject(1, 1, "English", 18);
     subjectArray[2] = Subject(2, 2, "Science", 22);
     subjectArray[3] = Subject(3, 3, "History", 16);
-    subjectArray[4] = Subject(4, 4, "Geography", 15);
+    subjectArray[4] = Subject(4, 4, "Music", 15);
 
     centreArray[0] = Centre(0, 0, "Centre 1", "Bukit Jalil", 4);
     centreArray[1] = Centre(1, 1, "Centre 2", "Sri Petaling", 5);
