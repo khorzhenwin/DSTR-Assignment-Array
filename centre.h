@@ -30,51 +30,85 @@ public:
     };
 };
 
-void displayCentreList(Centre *&centreArray, int &size, int page)
+void displayCentreList(Centre *&centreArray, int &size)
 {
-    system("cls");
-    // paginate the list
-    int pageSize = 10;
-    int totalPages = (size / pageSize) + 1;
-    int pageStart = (page - 1) * pageSize;
-    int pageEnd = page * pageSize;
-    if (pageEnd > size)
+    int page = 1;
+    while (true)
     {
-        pageEnd = size;
-    }
-    // display the list
-    std::cout << "Centre List" << std::endl;
-    std::cout << "Page " << page << " of " << totalPages << std::endl;
-    std::cout << "No.\tID\tCentre Name\tCentre Location\t\tAdmin ID" << std::endl
-              << std::endl;
-    for (int i = pageStart; i < pageEnd; i++)
-    {
-        std::cout << i + 1 << "\t" << centreArray[i].id << "\t" << centreArray[i].centreName << "\t" << centreArray[i].centreLocation << "\t\t" << centreArray[i].adminId << std::endl;
-    }
-    std::cout << std::endl;
-    std::cout << "Enter -1 to return to main menu." << std::endl;
-    std::cout << "Page: ";
-    std::cin >> page;
-    if (page == -1)
-    {
+        bool arrayEnd = false;
         system("cls");
-        return;
-    }
-    while (page < 1 || page > totalPages)
-    {
-        if (page == -1)
+        // start
+        int start = (page - 1) * 10;
+        int end = page * 10;
+        std::string userRole;
+        std::cout << "Centre list - Page " << page << std::endl;
+        std::cout << std::setw(90) << std::setfill('=') << "" << std::endl;
+        std::cout << std::setw(6) << std::setfill(' ') << "No.";
+        std::cout << std::setw(11) << std::setfill(' ') << "Centre ID";
+        std::cout << std::setw(31) << std::setfill(' ') << "Centre Name";
+        std::cout << std::setw(21) << std::setfill(' ') << "Centre Location";
+        std::cout << std::setw(11) << std::setfill(' ') << "Admin ID" << std::endl;
+        std::cout << std::setw(90) << std::setfill('=') << "" << std::endl;
+        for (int i = start; i < end; ++i)
         {
-            system("cls");
-            return;
+            // if not end of dynamic array
+            if (i < size)
+            {
+                std::cout << std::setw(5) << std::setfill(' ') << i + 1 << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << centreArray[i].id << " ";
+                std::cout << std::setw(30) << std::setfill(' ') << centreArray[i].centreName << " ";
+                std::cout << std::setw(20) << std::setfill(' ') << centreArray[i].centreLocation << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << centreArray[i].adminId << " " << std::endl;
+            }
+            if (i == size)
+            {
+                arrayEnd = true;
+                break;
+            }
         }
-        std::cout << std::endl;
-        std::cout << "Invalid page. Please try again." << std::endl;
-        std::cout << "Page: ";
-        std::cin >> page;
+        int input = -1;
+        while ((input != 0 && input != 1 && input != 2) || !std::cin.good())
+        {
+            std::cout << "Press 1 to continue or 0 to exit or 2 to the previous page" << std::endl;
+            int input = 10;
+            std::cin >> input;
+            if (input == 0)
+            {
+                return;
+            }
+            else if (input == 1)
+            {
+                if (arrayEnd)
+                {
+                    std::cout << "This is the last page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page++;
+                    break;
+                }
+            }
+            else if (input == 2)
+            {
+                if (page == 1)
+                {
+                    std::cout << "This is the first page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page--;
+                    break;
+                }
+            }
+            else
+            {
+                input = -1;
+                std::cout << "Invalid input" << std::endl;
+            }
+        }
     }
-
-    system("cls");
-    displayCentreList(centreArray, size, page);
 }
 
 void displayCentre(Centre *&centreArray, int index)

@@ -27,50 +27,81 @@ public:
     };
 };
 
-void displaySubjectList(Subject *&subjectArray, int &subjectSize, int page)
+void displaySubjectList(Subject *&subjectArray, int &size)
 {
-    system("cls");
-    // paginate the list
-    int pageSize = 10;
-    int totalPages = (subjectSize / pageSize) + 1;
-    int pageStart = (page - 1) * pageSize;
-    int pageEnd = page * pageSize;
-    if (pageEnd > subjectSize)
+    int page = 1;
+    while (true)
     {
-        pageEnd = subjectSize;
-    }
-    // display the list
-    std::cout << "Subject List" << std::endl;
-    std::cout << "Page " << page << " of " << totalPages << std::endl;
-    std::cout << "No.\tID\tSubject Name\tHourly Pay Rate" << std::endl;
-    for (int i = pageStart; i < pageEnd; i++)
-    {
-        std::cout << i + 1 << "\t" << subjectArray[i].id << "\t" << subjectArray[i].subjectName << "\t\t" << subjectArray[i].hourlyPayRate << std::endl;
-    }
-    std::cout << std::endl;
-    std::cout << "Enter -1 to return to main menu." << std::endl;
-    std::cout << "Page: ";
-    std::cin >> page;
-    if (page == -1)
-    {
+        bool arrayEnd = false;
         system("cls");
-        return;
-    }
-    while (page < 1 || page > totalPages)
-    {
-        if (page == -1)
+        // start
+        int start = (page - 1) * 10;
+        int end = page * 10;
+        std::cout << "Subject list - Page " << page << std::endl;
+        std::cout << std::setw(75) << std::setfill('=') << "" << std::endl;
+        std::cout << std::setw(6) << std::setfill(' ') << "No.";
+        std::cout << std::setw(16) << std::setfill(' ') << "Subject ID";
+        std::cout << std::setw(16) << std::setfill(' ') << "Subject Name";
+        std::cout << std::setw(21) << std::setfill(' ') << "Hourly Pay Rate" << std::endl;
+        std::cout << std::setw(75) << std::setfill('=') << "" << std::endl;
+        for (int i = start; i < end; ++i)
         {
-            system("cls");
-            return;
+            if (i < size)
+            {
+                std::cout << std::setw(5) << std::setfill(' ') << i + 1 << " ";
+                std::cout << std::setw(15) << std::setfill(' ') << subjectArray[i].id << " ";
+                std::cout << std::setw(15) << std::setfill(' ') << subjectArray[i].subjectName << " ";
+                std::cout << std::setw(20) << std::setfill(' ') << subjectArray[i].hourlyPayRate << std::endl;
+            }
+            if (i == size)
+            {
+                arrayEnd = true;
+                break;
+            }
         }
-        std::cout << std::endl;
-        std::cout << "Invalid page. Please try again." << std::endl;
-        std::cout << "Page: ";
-        std::cin >> page;
+        int input = -1;
+        while ((input != 0 && input != 1 && input != 2) || !std::cin.good())
+        {
+            std::cout << "Press 1 to continue or 0 to exit or 2 to the previous page" << std::endl;
+            int input = 10;
+            std::cin >> input;
+            if (input == 0)
+            {
+                return;
+            }
+            else if (input == 1)
+            {
+                if (arrayEnd)
+                {
+                    std::cout << "This is the last page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page++;
+                    break;
+                }
+            }
+            else if (input == 2)
+            {
+                if (page == 1)
+                {
+                    std::cout << "This is the first page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page--;
+                    break;
+                }
+            }
+            else
+            {
+                input = -1;
+                std::cout << "Invalid input" << std::endl;
+            }
+        }
     }
-
-    system("cls");
-    displaySubjectList(subjectArray, subjectSize, page);
 }
 
 void displaySubject(Subject *&subjectArray, int index)

@@ -30,64 +30,96 @@ public:
     };
 };
 
-void displayUserList(User *&userArray, int &size, int page)
+void displayUserList(User *&userArray, int &size)
 {
-    system("cls");
-    std::string userRole;
-    // paginate the list
-    int pageSize = 10;
-    int totalPages = (size / pageSize) + 1;
-    int pageStart = (page - 1) * pageSize;
-    int pageEnd = page * pageSize;
-    if (pageEnd > size)
+    int page = 1;
+    while (true)
     {
-        pageEnd = size;
-    }
-    // display the list
-    std::cout << "User List" << std::endl;
-    std::cout << "Page " << page << " of " << totalPages << std::endl;
-    std::cout << "No.\tID\tUsername\tUser Type" << std::endl
-              << std::endl;
-    for (int i = pageStart; i < pageEnd; i++)
-    {
-        if (userArray[i].userType == 0)
-        {
-            userRole = "HR";
-        }
-        else if (userArray[i].userType == 1)
-        {
-            userRole = "Admin";
-        }
-        else
-        {
-            userRole = "Tutor";
-        }
-        std::cout << i + 1 << "\t" << userArray[i].id << "\t" << userArray[i].username << "\t\t" << userArray[i].userType << " - " << userRole << std::endl;
-    }
-    std::cout << std::endl;
-    std::cout << "Enter -1 to return to main menu." << std::endl;
-    std::cout << "Page: ";
-    std::cin >> page;
-    if (page == -1)
-    {
+        bool arrayEnd = false;
         system("cls");
-        return;
-    }
-    while (page < 1 || page > totalPages)
-    {
-        if (page == -1)
+        // start
+        int start = (page - 1) * 10;
+        int end = page * 10;
+        std::string userRole;
+        std::cout << "User list - Page " << page << std::endl;
+        std::cout << std::setw(60) << std::setfill('=') << "" << std::endl;
+        std::cout << std::setw(6) << std::setfill(' ') << "No.";
+        std::cout << std::setw(11) << std::setfill(' ') << "User ID";
+        std::cout << std::setw(11) << std::setfill(' ') << "Username";
+        std::cout << std::setw(11) << std::setfill(' ') << "Password";
+        std::cout << std::setw(18) << std::setfill(' ') << "User Type " << std::endl;
+        std::cout << std::setw(60) << std::setfill('=') << "" << std::endl;
+        for (int i = start; i < end; ++i)
         {
-            system("cls");
-            return;
+            if (i < size)
+            {
+                if (userArray[i].userType == 0)
+                {
+                    userRole = " 0 - HR";
+                }
+                else if (userArray[i].userType == 1)
+                {
+                    userRole = "1 - Admin";
+                }
+                else
+                {
+                    userRole = "2 - Tutor";
+                }
+                std::cout << std::setw(5) << std::setfill(' ') << i + 1 << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << userArray[i].id << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << userArray[i].username << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << userArray[i].password << " ";
+                std::cout << std::setw(17) << std::setfill(' ') << userRole << std::endl;
+            }
+            if (i == size)
+            {
+                arrayEnd = true;
+                break;
+            }
         }
-        std::cout << std::endl;
-        std::cout << "Invalid page. Please try again." << std::endl;
-        std::cout << "Page: ";
-        std::cin >> page;
+        int input = -1;
+        while ((input != 0 && input != 1 && input != 2) || !std::cin.good())
+        {
+            std::cout << "Press 1 to continue or 0 to exit or 2 to the previous page" << std::endl;
+            int input = 10;
+            std::cin >> input;
+            if (input == 0)
+            {
+                return;
+            }
+            else if (input == 1)
+            {
+                if (arrayEnd)
+                {
+                    std::cout << "This is the last page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page++;
+                    break;
+                }
+            }
+            else if (input == 2)
+            {
+                if (page == 1)
+                {
+                    std::cout << "This is the first page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page--;
+                    break;
+                }
+            }
+            else
+            {
+                input = -1;
+                std::cout << "Invalid input" << std::endl;
+            }
+        }
     }
-
-    system("cls");
-    displayUserList(userArray, size, page);
 }
 
 void displayUser(User *&userArray, int index)

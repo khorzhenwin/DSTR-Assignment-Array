@@ -182,7 +182,7 @@ void displayHrMenu(User *userArray,
         if (choice == 1)
         {
             std::cout << std::endl;
-            displayUserList(userArray, userArraySize, 1);
+            displayUserList(userArray, userArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // search user
@@ -221,7 +221,7 @@ void displayHrMenu(User *userArray,
         if (choice == 1)
         {
             std::cout << std::endl;
-            displayCentreList(centreArray, centreArraySize, 1);
+            displayCentreList(centreArray, centreArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // search centre
@@ -260,7 +260,7 @@ void displayHrMenu(User *userArray,
         if (choice == 1)
         {
             std::cout << std::endl;
-            displaySubjectList(subjectArray, subjectArraySize, 1);
+            displaySubjectList(subjectArray, subjectArraySize);
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
         // search subject
@@ -519,7 +519,7 @@ void displayAdminMenu(int loginID,
         displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 3:
         std::cout << std::endl;
-        displaySubjectList(subjectArray, subjectArraySize, 1);
+        displaySubjectList(subjectArray, subjectArraySize);
         displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 4:
         addRating(centreArray[centreIndex].id, tutorArray, tutorArraySize);
