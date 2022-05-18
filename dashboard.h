@@ -142,7 +142,14 @@ int searchTutorDashboard(int userType)
 }
 
 // ---------------------------------------------- Dashboards ----------------------------------------------
-void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, Tutor *tutorArray, int &userArraySize, int &subjectArraySize, int &centreArraySize, int &tutorArraySize)
+void displayHrMenu(User *userArray,
+                   Subject *subjectArray,
+                   Centre *centreArray,
+                   Tutor *tutorArray,
+                   int &userArraySize,
+                   int &subjectArraySize,
+                   int &centreArraySize,
+                   int &tutorArraySize)
 {
     int choice, tutorViewChoice, searchTutorChoice;
     std::cout << "1 - Manage Users" << std::endl;
@@ -382,6 +389,144 @@ void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, 
     case 6:
         displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 7:
+        std::cout << "Exiting program..." << std::endl;
+        exit(0);
+        break;
+        return;
+    }
+}
+
+void displayAdminMenu(int loginID,
+                      User *userArray,
+                      Subject *subjectArray,
+                      Centre *centreArray,
+                      Tutor *tutorArray,
+                      int &userArraySize,
+                      int &subjectArraySize,
+                      int &centreArraySize,
+                      int &tutorArraySize)
+{
+    int choice, tutorViewChoice, searchTutorChoice;
+    int centreIndex = linearSearchCentre(centreArray, centreArraySize, loginID);
+    std::cout << "1 - Manage Tutors" << std::endl;
+    std::cout << "2 - View Centre Details" << std::endl;
+    std::cout << "3 - View All Subjects" << std::endl;
+    std::cout << "4 - Add Ratings" << std::endl;
+    std::cout << "5 - View Tutor Archive" << std::endl;
+    std::cout << "6 - Exit Program" << std::endl;
+
+    int input;
+    std::cout << "Enter your choice: ";
+    std::cin >> input;
+
+    while (!std::cin.good() || input < 1 || input > 6)
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input. Please try again." << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> input;
+    }
+
+    switch (input)
+    {
+    // ---------------------------------------------------------------------------------- Manage Tutors ----------------------------------------------------------------------------------
+    case 1:
+        choice = manageObject(4);
+        // view all tutors
+        if (choice == 1)
+        {
+            tutorViewChoice = viewTutorSorted();
+            system("cls");
+            // view tutors sorted by ID
+            if (tutorViewChoice == 1)
+            {
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+            // view tutors sorted by hourly pay rate
+            else if (tutorViewChoice == 2)
+            {
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+            // view tutors sorted by rating
+            else if (tutorViewChoice == 3)
+            {
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+            else
+            {
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+        }
+        // search tutor
+        else if (choice == 2)
+        {
+            searchTutorChoice = searchTutorDashboard(1);
+            system("cls");
+            // search tutor by ID
+            if (searchTutorChoice == 1)
+            {
+                searchTutorById(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+            // filter by Rating
+            else if (searchTutorChoice == 2)
+            {
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+            // filter by Subject ID
+            else if (searchTutorChoice == 3)
+            {
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+            else
+            {
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            }
+        }
+        // add Tutor
+        else if (choice == 3)
+        {
+            addTutor(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        }
+        // edit tutor
+        else if (choice == 4)
+        {
+            updateTutor(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        }
+        // delete tutor
+        else if (choice == 5)
+        {
+            system("cls");
+            std::cout << "The delete function is not accessible by Admins. Please contact HR for support." << std::endl
+                      << std::endl;
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        }
+        else if (choice == 6)
+        {
+            terminateTutor(centreArray[centreIndex].id, tutorArray, tutorArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        }
+        else if (choice == 7)
+        {
+            system("cls");
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        }
+    case 2:
+        displayCentre(centreArray, centreIndex);
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    case 3:
+        std::cout << std::endl;
+        displaySubjectList(subjectArray, subjectArraySize, 1);
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    case 4:
+        addRating(centreArray[centreIndex].id, tutorArray, tutorArraySize);
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    case 5:
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    case 6:
         std::cout << "Exiting program..." << std::endl;
         exit(0);
         break;

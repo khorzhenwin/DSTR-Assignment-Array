@@ -79,6 +79,7 @@ int main()
     }
     else if (userLogin.userType == 1)
     {
+        displayAdminMenu(userLogin.id, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     }
     else
     {
