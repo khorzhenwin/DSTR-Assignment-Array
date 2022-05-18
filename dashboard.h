@@ -360,6 +360,7 @@ void displayHrMenu(User *userArray, Subject *subjectArray, Centre *centreArray, 
         {
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
         }
+        // terminate tutor
         else if (choice == 6)
         {
             displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);

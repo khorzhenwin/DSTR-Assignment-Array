@@ -50,3 +50,19 @@ public:
         this->subjectId = subjectId;
     };
 };
+
+void filterTutors() {}
+
+void displayTutor() {}
+
+void searchTutorById() {}
+
+void addTutor() {}
+
+void updateTutor() {}
+
+void deleteTutor() {}
+
+void addRating() {}
+
+void terminateTutor() {}
