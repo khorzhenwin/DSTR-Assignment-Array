@@ -303,6 +303,7 @@ void displayHrMenu(User *userArray,
             // view tutors sorted by ID
             if (tutorViewChoice == 1)
             {
+                filterTutors(-1, -2, -2, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // view tutors sorted by hourly pay rate

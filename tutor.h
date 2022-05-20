@@ -51,7 +51,112 @@ public:
     };
 };
 
-void filterTutors() {}
+void filterTutors(int centreID, int subjectID, int tutorRatings, Tutor *&tutorArray, int &size, Centre *&centreArray, int &centreArraySize, Subject *&subjectArray, int &subjectArraySize)
+{
+    int page = 1;
+    float ratings;
+    int index;
+    while (true)
+    {
+        bool arrayEnd = false;
+        system("cls");
+        // start
+        int start = (page - 1) * 10;
+        int end = page * 10;
+        std::cout << "Tutor list - Page " << page << std::endl;
+        std::cout << std::setw(237) << std::setfill('=') << "" << std::endl;
+        std::cout << std::setw(6) << std::setfill(' ') << "No.";
+        std::cout << std::setw(11) << std::setfill(' ') << "Tutor ID";
+        std::cout << std::setw(21) << std::setfill(' ') << "Tutor Name";
+        std::cout << std::setw(31) << std::setfill(' ') << "Tutor Address";
+        std::cout << std::setw(16) << std::setfill(' ') << "Phone Number";
+        std::cout << std::setw(13) << std::setfill(' ') << "Dated Joined";
+        std::cout << std::setw(17) << std::setfill(' ') << "Dated Terminated";
+        std::cout << std::setw(11) << std::setfill(' ') << "Ratings";
+        std::cout << std::setw(11) << std::setfill(' ') << "Centre ID";
+        std::cout << std::setw(26) << std::setfill(' ') << "Centre Name";
+        std::cout << std::setw(11) << std::setfill(' ') << "Subject ID";
+        std::cout << std::setw(16) << std::setfill(' ') << "Subject Name";
+        std::cout << std::setw(17) << std::setfill(' ') << "Hourly Pay Rate" << std::endl;
+        std::cout << std::setw(237) << std::setfill('=') << "" << std::endl;
+        for (int i = start; i < end; ++i)
+        {
+            if (i < size)
+            {
+                if (tutorArray[i].ratingCount == 0)
+                {
+                    ratings = 0;
+                }
+                else
+                {
+                    ratings = float(tutorArray[i].totalRatings) / float(tutorArray[i].ratingCount);
+                }
+                std::cout << std::setw(5) << std::setfill(' ') << i + 1 << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << tutorArray[i].id << " ";
+                std::cout << std::setw(20) << std::setfill(' ') << tutorArray[i].tutorName << " ";
+                std::cout << std::setw(30) << std::setfill(' ') << tutorArray[i].tutorAddress << " ";
+                std::cout << std::setw(15) << std::setfill(' ') << tutorArray[i].tutorPhoneNumber << " ";
+                std::cout << std::setw(12) << std::setfill(' ') << tutorArray[i].dateJoined << " ";
+                std::cout << std::setw(16) << std::setfill(' ') << tutorArray[i].dateTerminated;
+                std::cout << std::setw(10) << std::setfill(' ') << std::fixed << std::setprecision(2) << ratings << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << tutorArray[i].centreId << " ";
+                index = binarySearch(centreArray, centreArraySize, tutorArray[i].centreId);
+                std::cout << std::setw(25) << std::setfill(' ') << centreArray[index].centreName << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << tutorArray[i].subjectId << " ";
+                index = binarySearch(subjectArray, subjectArraySize, tutorArray[i].subjectId);
+                std::cout << std::setw(15) << std::setfill(' ') << subjectArray[index].subjectName << " ";
+                std::cout << std::setw(16) << std::setfill(' ') << subjectArray[index].hourlyPayRate  << std::endl;
+            }
+            if (i == size)
+            {
+                arrayEnd = true;
+                break;
+            }
+        }
+        int input = -1;
+        while ((input != 0 && input != 1 && input != 2) || !std::cin.good())
+        {
+            std::cout << "Press 1 to continue or 0 to exit or 2 to the previous page" << std::endl;
+            int input = 10;
+            std::cin >> input;
+            if (input == 0)
+            {
+                return;
+            }
+            else if (input == 1)
+            {
+                if (arrayEnd)
+                {
+                    std::cout << "This is the last page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page++;
+                    break;
+                }
+            }
+            else if (input == 2)
+            {
+                if (page == 1)
+                {
+                    std::cout << "This is the first page!" << std::endl;
+                    break;
+                }
+                else
+                {
+                    page--;
+                    break;
+                }
+            }
+            else
+            {
+                input = -1;
+                std::cout << "Invalid input" << std::endl;
+            }
+        }
+    }
+}
 
 void displayTutor(int index, Tutor *&tutorArray, int &tutorArraySize, Centre *&centreArray, int &centreArraySize, Subject *&subjectArray, int &subjectArraySize)
 {
