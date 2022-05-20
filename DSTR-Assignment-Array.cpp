@@ -83,6 +83,7 @@ int main()
     }
     else
     {
+        displayTutorMenu(userLogin.id, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     }
 
     return 0;

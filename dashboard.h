@@ -533,3 +533,57 @@ void displayAdminMenu(int loginID,
         return;
     }
 }
+
+void displayTutorMenu(int loginID,
+    User* userArray,
+    Subject* subjectArray,
+    Centre* centreArray,
+    Tutor* tutorArray,
+    int& userArraySize,
+    int& subjectArraySize,
+    int& centreArraySize,
+    int& tutorArraySize)
+{
+    int userIndex = binarySearch(userArray, userArraySize, loginID);
+    int tutorIndex = binarySearch(tutorArray, tutorArraySize, userIndex);
+    int centerId = tutorArray[tutorIndex].centreId;
+    int subjectId = tutorArray[tutorIndex].subjectId;
+    int centreIndex = binarySearch(centreArray, centreArraySize, centerId);
+    int subjectIndex = binarySearch(subjectArray, subjectArraySize, subjectId);
+
+    std::cout << "1 - View Centre Details" << std::endl;
+    std::cout << "2 - View Subject Details" << std::endl;
+    std::cout << "3 - View Tutor Details" << std::endl;
+    std::cout << "4 - Exit Program" << std::endl;
+
+    int input;
+    std::cout << "Enter your choice: ";
+    std::cin >> input;
+
+    while (!std::cin.good() || input < 1 || input > 4)
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input. Please try again." << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> input;
+    }
+
+    switch (input)
+    {
+    case 1:
+        displayCentre(centreArray, centreIndex);
+        displayTutorMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    case 2:
+        displaySubject(subjectArray, subjectIndex);
+        displayTutorMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    case 3:
+        displayTutor(userIndex, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
+        displayTutorMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+    case 4:
+        std::cout << "Exiting program..." << std::endl;
+        exit(0);
+        break;
+        return;
+    }
+}
