@@ -208,4 +208,23 @@ void deleteObject(T *&array, int &size, int index)
     std::cout << "Object at index: " << index << " deleted successfully!" << std::endl;
 }
 
+//delete archive tutor
+template <class T>
+void deleteArchiveTutor(T*& array, int& size, int index)
+{
+    if (index > size - 1 || index < 0)
+    {
+        std::cout << "Error: index out of range" << std::endl;
+        return;
+    }
+    for (int i = index; i < size - 1; i++)
+    {
+        array[i] = array[i + 1];
+        array[i].index = i;
+    }
+
+    shrinkArray(array, size);
+    std::cout << "Tutor with Id: " << array[index].id-1 << " deleted successfully!" << std::endl;
+}
+
 #endif // PCH_H

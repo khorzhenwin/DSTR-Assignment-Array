@@ -57,7 +57,29 @@ void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreA
     tutorArray[14] = Tutor(14, 14, "Coconut Tree", "Taman OUG, Kuala Lumpur", "+60123456715", "03/08/2021", "", 82, 20, 2, 4);
 };
 
-void archiveTerminated();
+
+void archiveTerminated(Archive*& archiveArray, int &archiveArraySize, Tutor*& tutorArray, int &tutorArraySize) {
+    // get the current date
+    std::string currentDate = getDateToday();
+    for (int i = 0; i < tutorArraySize; ++i) {
+        if (tutorArray[i].dateTerminated != "")
+        {
+            int sixMonthsAgo = getDateDifference(tutorArray[i].dateTerminated, currentDate);
+            if (sixMonthsAgo > 180)
+            {
+                std::cout << "Archiving " << tutorArray[i].tutorName << "." << std::endl;
+
+                Archive* newArchive = new Archive(archiveArraySize, archiveArray[archiveArraySize - 1].id + 1, tutorArray[i].tutorName, tutorArray[i].tutorAddress,
+                    tutorArray[i].tutorPhoneNumber, tutorArray[i].dateJoined, tutorArray[i].dateTerminated, tutorArray[i].totalRatings, tutorArray[i].ratingCount,
+                    tutorArray[i].centreId, tutorArray[i].subjectId);
+                createObject(archiveArray, archiveArraySize, newArchive);
+                deleteArchiveTutor(tutorArray, tutorArraySize, tutorArray[i].index);
+
+            }
+        }
+    }
+    std::cout << endl;
+};
 
 int main()
 {
@@ -65,17 +87,20 @@ int main()
     Subject *subjectArray = new Subject[5];
     Centre *centreArray = new Centre[5];
     Tutor *tutorArray = new Tutor[15];
+    Archive* archiveArray = new Archive[0];
     int userArraySize = 15;
     int subjectArraySize = 5;
     int centreArraySize = 3;
     int tutorArraySize = 15;
+    int archiveArraySize = 0;
 
     generateMockData(userArray, subjectArray, centreArray, tutorArray);
+    archiveTerminated(archiveArray, archiveArraySize, tutorArray, tutorArraySize);
 
     User userLogin = login(userArray, userArraySize);
     if (userLogin.userType == 0)
     {
-        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     }
     else if (userLogin.userType == 1)
     {
