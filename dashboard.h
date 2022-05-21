@@ -146,7 +146,7 @@ void displayHrMenu(User *userArray,
                    Subject *subjectArray,
                    Centre *centreArray,
                    Tutor *tutorArray,
-                   Archive* archiveArray,
+                   Archive *archiveArray,
                    int &userArraySize,
                    int &subjectArraySize,
                    int &centreArraySize,
@@ -404,10 +404,12 @@ void displayAdminMenu(int loginID,
                       Subject *subjectArray,
                       Centre *centreArray,
                       Tutor *tutorArray,
+                      Archive *archiveArray,
                       int &userArraySize,
                       int &subjectArraySize,
                       int &centreArraySize,
-                      int &tutorArraySize)
+                      int &tutorArraySize,
+                      int &archiveArraySize)
 {
     int choice, tutorViewChoice, searchTutorChoice;
     int centreIndex = linearSearchCentre(centreArray, centreArraySize, loginID);
@@ -444,21 +446,21 @@ void displayAdminMenu(int loginID,
             // view tutors sorted by ID
             if (tutorViewChoice == 1)
             {
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // view tutors sorted by hourly pay rate
             else if (tutorViewChoice == 2)
             {
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // view tutors sorted by rating
             else if (tutorViewChoice == 3)
             {
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             else
             {
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
         }
         // search tutor
@@ -470,34 +472,34 @@ void displayAdminMenu(int loginID,
             if (searchTutorChoice == 1)
             {
                 searchTutorById(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // filter by Rating
             else if (searchTutorChoice == 2)
             {
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // filter by Subject ID
             else if (searchTutorChoice == 3)
             {
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             else
             {
-                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+                displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
         }
         // add Tutor
         else if (choice == 3)
         {
             addTutor(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
-            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
         }
         // edit tutor
         else if (choice == 4)
         {
             updateTutor(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
-            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
         }
         // delete tutor
         else if (choice == 5)
@@ -505,30 +507,31 @@ void displayAdminMenu(int loginID,
             system("cls");
             std::cout << "The delete function is not accessible by Admins. Please contact HR for support." << std::endl
                       << std::endl;
-            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
         }
         else if (choice == 6)
         {
             terminateTutor(centreArray[centreIndex].id, tutorArray, tutorArraySize);
-            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
         }
         else if (choice == 7)
         {
             system("cls");
-            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+            displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
         }
     case 2:
         displayCentre(centreArray, centreIndex);
-        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     case 3:
         std::cout << std::endl;
         displaySubjectList(subjectArray, subjectArraySize);
-        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     case 4:
         addRating(centreArray[centreIndex].id, tutorArray, tutorArraySize);
-        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     case 5:
-        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        displayArchiveList(archiveArray, archiveArraySize);
+        displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     case 6:
         std::cout << "Exiting program..." << std::endl;
         exit(0);
@@ -538,20 +541,21 @@ void displayAdminMenu(int loginID,
 }
 
 void displayTutorMenu(int loginID,
-    User* userArray,
-    Subject* subjectArray,
-    Centre* centreArray,
-    Tutor* tutorArray,
-    int& userArraySize,
-    int& subjectArraySize,
-    int& centreArraySize,
-    int& tutorArraySize)
+                      User *userArray,
+                      Subject *subjectArray,
+                      Centre *centreArray,
+                      Tutor *tutorArray,
+                      int &userArraySize,
+                      int &subjectArraySize,
+                      int &centreArraySize,
+                      int &tutorArraySize)
 {
     int userIndex = binarySearch(userArray, userArraySize, loginID);
-    int tutorIndex = binarySearch(tutorArray, tutorArraySize, userIndex);
-    int centerId = tutorArray[tutorIndex].centreId;
+    int tutorId = std::stoi(userArray[userIndex].username);
+    int tutorIndex = binarySearch(tutorArray, tutorArraySize, tutorId);
+    int centreId = tutorArray[tutorIndex].centreId;
     int subjectId = tutorArray[tutorIndex].subjectId;
-    int centreIndex = binarySearch(centreArray, centreArraySize, centerId);
+    int centreIndex = binarySearch(centreArray, centreArraySize, centreId);
     int subjectIndex = binarySearch(subjectArray, subjectArraySize, subjectId);
 
     std::cout << "1 - View Centre Details" << std::endl;
@@ -581,7 +585,7 @@ void displayTutorMenu(int loginID,
         displaySubject(subjectArray, subjectIndex);
         displayTutorMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 3:
-        displayTutor(userIndex, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
+        displayTutor(tutorIndex, tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
         displayTutorMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     case 4:
         std::cout << "Exiting program..." << std::endl;
