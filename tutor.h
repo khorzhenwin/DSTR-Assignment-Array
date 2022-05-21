@@ -51,7 +51,7 @@ public:
     };
 };
 
-void filterTutors(int centreID, int subjectID, int tutorRatings, Tutor *&tutorArray, int &size, Centre *&centreArray, int &centreArraySize, Subject *&subjectArray, int &subjectArraySize)
+void displayTutorsList(Tutor *&tutorArray, int &size, Centre *&centreArray, int &centreArraySize, Subject *&subjectArray, int &subjectArraySize)
 {
     int page = 1;
     float ratings;
@@ -128,7 +128,7 @@ void filterTutors(int centreID, int subjectID, int tutorRatings, Tutor *&tutorAr
                 if (arrayEnd)
                 {
                     std::cout << "This is the last page!" << std::endl;
-                    break;
+                    input = -1;
                 }
                 else
                 {
@@ -141,7 +141,7 @@ void filterTutors(int centreID, int subjectID, int tutorRatings, Tutor *&tutorAr
                 if (page == 1)
                 {
                     std::cout << "This is the first page!" << std::endl;
-                    break;
+                    input = -1;
                 }
                 else
                 {
@@ -546,4 +546,52 @@ void terminateTutor(int adminCentreId, Tutor *&tutorArray, int &tutorArraySize)
     {
         std::cout << "Tutor not found. Please try again." << std::endl;
     }
+}
+
+// ---------------------------------------------------------------------------------- Filter Tutors ----------------------------------------------------------------------------------
+
+Tutor *tutorFilterCentre(int centreID, Tutor *tutorArray, int tutorArraySize, int &filteredTutorArraySize)
+{
+    Tutor *filteredTutorArray = new Tutor[tutorArraySize];
+    // filteredTutorArraySize = 0;
+    for (int i = 0; i < tutorArraySize; i++)
+    {
+        if (tutorArray[i].centreId == centreID)
+        {
+            filteredTutorArray[filteredTutorArraySize] = tutorArray[i];
+            filteredTutorArraySize++;
+        }
+    }
+    return filteredTutorArray;
+}
+
+Tutor *tutorFilterSubject(int subjectID, Tutor *tutorArray, int tutorArraySize, int &filteredTutorArraySize)
+{
+    Tutor *filteredTutorArray = new Tutor[tutorArraySize];
+    // filteredTutorArraySize = 0;
+    for (int i = 0; i < tutorArraySize; i++)
+    {
+        if (tutorArray[i].subjectId == subjectID)
+        {
+            filteredTutorArray[filteredTutorArraySize] = tutorArray[i];
+            filteredTutorArraySize++;
+        }
+    }
+    return filteredTutorArray;
+}
+
+Tutor *tutorFilterRating(int rating, Tutor *tutorArray, int tutorArraySize, int &filteredTutorArraySize)
+{
+    Tutor *filteredTutorArray = new Tutor[tutorArraySize];
+    float currentRatings;
+    for (int i = 0; i < tutorArraySize; i++)
+    {
+        currentRatings = float(tutorArray[i].totalRatings) / float(tutorArray[i].ratingCount);
+        if (std::round(currentRatings) == rating)
+        {
+            filteredTutorArray[filteredTutorArraySize] = tutorArray[i];
+            filteredTutorArraySize++;
+        }
+    }
+    return filteredTutorArray;
 }
