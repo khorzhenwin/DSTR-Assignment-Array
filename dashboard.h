@@ -162,7 +162,7 @@ int subjectValidation(Subject *&subjectArray, int &subjectArraySize)
     int subjectId;
     std::cout << "Enter your subject ID: ";
     std::cin >> subjectId;
-    while (!std::cin.good() || binarySearch(subjectArray, subjectArraySize, subjectId) != -1)
+    while (!std::cin.good() || binarySearch(subjectArray, subjectArraySize, subjectId) == -1)
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -178,7 +178,7 @@ int centreValidation(Centre *&centreArray, int &centreArraySize)
     int centreId;
     std::cout << "Enter your centre ID: ";
     std::cin >> centreId;
-    while (!std::cin.good() || binarySearch(centreArray, centreArraySize, centreId) != -1)
+    while (!std::cin.good() || binarySearch(centreArray, centreArraySize, centreId) == -1)
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -392,9 +392,9 @@ void displayHrMenu(User *userArray,
             // filter by Subject ID
             else if (searchTutorChoice == 3)
             {
-                int centreIDFiltered = centreValidation(centreArray, centreArraySize);
+                int subjectIDFiltered = subjectValidation(subjectArray, subjectArraySize);
                 int filteredTutorArraySize = 0;
-                Tutor *filteredTutorArray = tutorFilterSubject(centreIDFiltered, tutorArray, tutorArraySize, filteredTutorArraySize);
+                Tutor *filteredTutorArray = tutorFilterSubject(subjectIDFiltered, tutorArray, tutorArraySize, filteredTutorArraySize);
                 displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
@@ -501,6 +501,9 @@ void displayAdminMenu(int loginID,
             // view tutors sorted by ID
             if (tutorViewChoice == 1)
             {
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterCentre(centreArray[centreIndex].id, tutorArray, tutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // view tutors sorted by hourly pay rate
@@ -532,11 +535,23 @@ void displayAdminMenu(int loginID,
             // filter by Rating
             else if (searchTutorChoice == 2)
             {
+                int centreFilteredTutorArraySize = 0;
+                Tutor *centreFilteredTutorArray = tutorFilterCentre(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreFilteredTutorArraySize);
+                int ratingFiltered = ratingValidation();
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterRating(ratingFiltered, centreFilteredTutorArray, centreFilteredTutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             // filter by Subject ID
             else if (searchTutorChoice == 3)
             {
+                int centreFilteredTutorArraySize = 0;
+                Tutor *centreFilteredTutorArray = tutorFilterCentre(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreFilteredTutorArraySize);
+                int subjectIDFiltered = subjectValidation(subjectArray, subjectArraySize);
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterSubject(subjectIDFiltered, centreFilteredTutorArray, centreFilteredTutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
             }
             else
