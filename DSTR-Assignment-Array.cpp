@@ -22,11 +22,11 @@ void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreA
     userArray[7] = User(7, 7, "admin4", "123", 1);
     userArray[8] = User(8, 8, "admin5", "123", 1);
     userArray[9] = User(9, 9, "admin6", "123", 1);
-    userArray[10] = User(10, 10, "tutor1", "123", 2);
-    userArray[11] = User(11, 11, "tutor2", "123", 2);
-    userArray[12] = User(12, 12, "tutor3", "123", 2);
-    userArray[13] = User(13, 13, "tutor4", "123", 2);
-    userArray[14] = User(14, 14, "tutor5", "123", 2);
+    userArray[10] = User(10, 10, "0", "123", 2);
+    userArray[11] = User(11, 11, "1", "123", 2);
+    userArray[12] = User(12, 12, "2", "123", 2);
+    userArray[13] = User(13, 13, "3", "123", 2);
+    userArray[14] = User(14, 14, "4", "123", 2);
 
     subjectArray[0] = Subject(0, 0, "Math", 20);
     subjectArray[1] = Subject(1, 1, "English", 18);
@@ -57,7 +57,29 @@ void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreA
     tutorArray[14] = Tutor(14, 14, "Coconut Tree", "Taman OUG, Kuala Lumpur", "+60123456715", "03/08/2021", "", 82, 20, 2, 4);
 };
 
-void archiveTerminated();
+void archiveTerminated(Archive *&archiveArray, int &archiveArraySize, Tutor *&tutorArray, int &tutorArraySize)
+{
+    // get the current date
+    std::string currentDate = getDateToday();
+    for (int i = 0; i < tutorArraySize; ++i)
+    {
+        if (tutorArray[i].dateTerminated != "")
+        {
+            int sixMonthsAgo = getDateDifference(tutorArray[i].dateTerminated, currentDate);
+            if (sixMonthsAgo > 180)
+            {
+                std::cout << "Archiving " << tutorArray[i].tutorName << "." << std::endl;
+
+                Archive *newArchive = new Archive(archiveArraySize, archiveArray[archiveArraySize - 1].id + 1, tutorArray[i].tutorName, tutorArray[i].tutorAddress,
+                                                  tutorArray[i].tutorPhoneNumber, tutorArray[i].dateJoined, tutorArray[i].dateTerminated, tutorArray[i].totalRatings, tutorArray[i].ratingCount,
+                                                  tutorArray[i].centreId, tutorArray[i].subjectId);
+                createObject(archiveArray, archiveArraySize, newArchive);
+                deleteArchiveTutor(tutorArray, tutorArraySize, tutorArray[i].index);
+            }
+        }
+    }
+    std::cout << endl;
+};
 
 int main()
 {
@@ -65,24 +87,28 @@ int main()
     Subject *subjectArray = new Subject[5];
     Centre *centreArray = new Centre[5];
     Tutor *tutorArray = new Tutor[15];
+    Archive *archiveArray = new Archive[0];
     int userArraySize = 15;
     int subjectArraySize = 5;
     int centreArraySize = 3;
     int tutorArraySize = 15;
+    int archiveArraySize = 0;
 
     generateMockData(userArray, subjectArray, centreArray, tutorArray);
+    archiveTerminated(archiveArray, archiveArraySize, tutorArray, tutorArraySize);
 
     User userLogin = login(userArray, userArraySize);
     if (userLogin.userType == 0)
     {
-        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     }
     else if (userLogin.userType == 1)
     {
-        displayAdminMenu(userLogin.id, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
+        displayAdminMenu(userLogin.id, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     }
     else
     {
+        displayTutorMenu(userLogin.id, userArray, subjectArray, centreArray, tutorArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize);
     }
 
     return 0;
