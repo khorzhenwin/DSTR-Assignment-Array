@@ -51,7 +51,112 @@ public:
     };
 };
 
-void filterTutors() {}
+void displayTutorsList(Tutor *&tutorArray, int &size, Centre *&centreArray, int &centreArraySize, Subject *&subjectArray, int &subjectArraySize)
+{
+    int page = 1;
+    float ratings;
+    int index;
+    while (true)
+    {
+        bool arrayEnd = false;
+        system("cls");
+        // start
+        int start = (page - 1) * 10;
+        int end = page * 10;
+        std::cout << "Tutor list - Page " << page << std::endl;
+        std::cout << std::setw(237) << std::setfill('=') << "" << std::endl;
+        std::cout << std::setw(6) << std::setfill(' ') << "No.";
+        std::cout << std::setw(11) << std::setfill(' ') << "Tutor ID";
+        std::cout << std::setw(21) << std::setfill(' ') << "Tutor Name";
+        std::cout << std::setw(31) << std::setfill(' ') << "Tutor Address";
+        std::cout << std::setw(16) << std::setfill(' ') << "Phone Number";
+        std::cout << std::setw(13) << std::setfill(' ') << "Dated Joined";
+        std::cout << std::setw(17) << std::setfill(' ') << "Dated Terminated";
+        std::cout << std::setw(11) << std::setfill(' ') << "Ratings";
+        std::cout << std::setw(11) << std::setfill(' ') << "Centre ID";
+        std::cout << std::setw(26) << std::setfill(' ') << "Centre Name";
+        std::cout << std::setw(11) << std::setfill(' ') << "Subject ID";
+        std::cout << std::setw(16) << std::setfill(' ') << "Subject Name";
+        std::cout << std::setw(17) << std::setfill(' ') << "Hourly Pay Rate" << std::endl;
+        std::cout << std::setw(237) << std::setfill('=') << "" << std::endl;
+        for (int i = start; i < end; ++i)
+        {
+            if (i < size)
+            {
+                if (tutorArray[i].ratingCount == 0)
+                {
+                    ratings = 0;
+                }
+                else
+                {
+                    ratings = float(tutorArray[i].totalRatings) / float(tutorArray[i].ratingCount);
+                }
+                std::cout << std::setw(5) << std::setfill(' ') << i + 1 << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << tutorArray[i].id << " ";
+                std::cout << std::setw(20) << std::setfill(' ') << tutorArray[i].tutorName << " ";
+                std::cout << std::setw(30) << std::setfill(' ') << tutorArray[i].tutorAddress << " ";
+                std::cout << std::setw(15) << std::setfill(' ') << tutorArray[i].tutorPhoneNumber << " ";
+                std::cout << std::setw(12) << std::setfill(' ') << tutorArray[i].dateJoined << " ";
+                std::cout << std::setw(16) << std::setfill(' ') << tutorArray[i].dateTerminated;
+                std::cout << std::setw(10) << std::setfill(' ') << std::fixed << std::setprecision(2) << ratings << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << tutorArray[i].centreId << " ";
+                index = binarySearch(centreArray, centreArraySize, tutorArray[i].centreId);
+                std::cout << std::setw(25) << std::setfill(' ') << centreArray[index].centreName << " ";
+                std::cout << std::setw(10) << std::setfill(' ') << tutorArray[i].subjectId << " ";
+                index = binarySearch(subjectArray, subjectArraySize, tutorArray[i].subjectId);
+                std::cout << std::setw(15) << std::setfill(' ') << subjectArray[index].subjectName << " ";
+                std::cout << std::setw(16) << std::setfill(' ') << subjectArray[index].hourlyPayRate << std::endl;
+            }
+            if (i == size)
+            {
+                arrayEnd = true;
+                break;
+            }
+        }
+        int input = -1;
+        while ((input != 0 && input != 1 && input != 2) || !std::cin.good())
+        {
+            std::cout << "Press 1 to continue or 0 to exit or 2 to the previous page" << std::endl;
+            int input = 10;
+            std::cin >> input;
+            if (input == 0)
+            {
+                return;
+            }
+            else if (input == 1)
+            {
+                if (arrayEnd)
+                {
+                    std::cout << "This is the last page!" << std::endl;
+                    input = -1;
+                }
+                else
+                {
+                    page++;
+                    break;
+                }
+            }
+            else if (input == 2)
+            {
+                if (page == 1)
+                {
+                    std::cout << "This is the first page!" << std::endl;
+                    input = -1;
+                }
+                else
+                {
+                    page--;
+                    break;
+                }
+            }
+            else
+            {
+                input = -1;
+                std::cout << "Invalid input" << std::endl;
+            }
+        }
+    }
+}
 
 void displayTutor(int index, Tutor *&tutorArray, int &tutorArraySize, Centre *&centreArray, int &centreArraySize, Subject *&subjectArray, int &subjectArraySize)
 {
@@ -440,5 +545,128 @@ void terminateTutor(int adminCentreId, Tutor *&tutorArray, int &tutorArraySize)
     else
     {
         std::cout << "Tutor not found. Please try again." << std::endl;
+    }
+}
+
+// ---------------------------------------------------------------------------------- Filter Tutors ----------------------------------------------------------------------------------
+
+Tutor *tutorFilterCentre(int centreID, Tutor *tutorArray, int tutorArraySize, int &filteredTutorArraySize)
+{
+    Tutor *filteredTutorArray = new Tutor[tutorArraySize];
+    // filteredTutorArraySize = 0;
+    for (int i = 0; i < tutorArraySize; i++)
+    {
+        if (tutorArray[i].centreId == centreID)
+        {
+            filteredTutorArray[filteredTutorArraySize] = tutorArray[i];
+            filteredTutorArraySize++;
+        }
+    }
+    return filteredTutorArray;
+}
+
+Tutor *tutorFilterSubject(int subjectID, Tutor *tutorArray, int tutorArraySize, int &filteredTutorArraySize)
+{
+    Tutor *filteredTutorArray = new Tutor[tutorArraySize];
+    // filteredTutorArraySize = 0;
+    for (int i = 0; i < tutorArraySize; i++)
+    {
+        if (tutorArray[i].subjectId == subjectID)
+        {
+            filteredTutorArray[filteredTutorArraySize] = tutorArray[i];
+            filteredTutorArraySize++;
+        }
+    }
+    return filteredTutorArray;
+}
+
+Tutor *tutorFilterRating(int rating, Tutor *tutorArray, int tutorArraySize, int &filteredTutorArraySize)
+{
+    Tutor *filteredTutorArray = new Tutor[tutorArraySize];
+    float currentRatings;
+    for (int i = 0; i < tutorArraySize; i++)
+    {
+        currentRatings = float(tutorArray[i].totalRatings) / float(tutorArray[i].ratingCount);
+        if (std::round(currentRatings) == rating)
+        {
+            filteredTutorArray[filteredTutorArraySize] = tutorArray[i];
+            filteredTutorArraySize++;
+        }
+    }
+    return filteredTutorArray;
+}
+
+// ---------------------------------------------------------------------------------- Sorting Tutor Functions ----------------------------------------------------------------------------------
+
+Tutor *cloneTutorArray(Tutor *array, int count)
+{
+    Tutor *ptr = new Tutor[count];
+    for (int i = 0; i < count; ++i)
+    {
+        ptr[i] = array[i];
+    }
+    return ptr;
+}
+
+void swap(Tutor *a, Tutor *b)
+{
+    Tutor temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// ---------------------------------------------------------------------------------- Sort by ratings ----------------------------------------------------------------------------------
+
+int partitionRatings(Tutor *array, int low, int high)
+{
+    float pivot = float(array[high].totalRatings) / float(array[high].ratingCount);
+    int i = low - 1;
+    for (int j = low; j <= high - 1; j++)
+    {
+        if ((float(array[j].totalRatings) / float(array[j].ratingCount)) <= pivot)
+        {
+            i++;
+            swap(&array[i], &array[j]);
+        }
+    }
+    swap(&array[i + 1], &array[high]);
+    return (i + 1);
+}
+
+void quickSortRatings(Tutor *array, int low, int high)
+{
+    if (low < high)
+    {
+        int partitionIndex = partitionRatings(array, low, high);
+        quickSortRatings(array, low, partitionIndex - 1);
+        quickSortRatings(array, partitionIndex + 1, high);
+    }
+}
+
+// ---------------------------------------------------------------------------------- Sort by hourly pay rate ----------------------------------------------------------------------------------
+
+int partitionHourlyPayRate(Tutor *array, int low, int high, Subject *subjectArray, int subjectArraySize)
+{
+    int pivot = subjectArray[binarySearch(subjectArray, subjectArraySize, array[high].subjectId)].hourlyPayRate;
+    int i = low - 1;
+    for (int j = low; j <= high - 1; j++)
+    {
+        if (subjectArray[binarySearch(subjectArray, subjectArraySize, array[j].subjectId)].hourlyPayRate <= pivot)
+        {
+            i++;
+            swap(&array[i], &array[j]);
+        }
+    }
+    swap(&array[i + 1], &array[high]);
+    return (i + 1);
+}
+
+void quickSortHourlyPayRate(Tutor *array, int low, int high, Subject *subjectArray, int subjectArraySize)
+{
+    if (low < high)
+    {
+        int partitionIndex = partitionHourlyPayRate(array, low, high, subjectArray, subjectArraySize);
+        quickSortHourlyPayRate(array, low, partitionIndex - 1, subjectArray, subjectArraySize);
+        quickSortHourlyPayRate(array, partitionIndex + 1, high, subjectArray, subjectArraySize);
     }
 }

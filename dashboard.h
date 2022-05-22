@@ -141,6 +141,53 @@ int searchTutorDashboard(int userType)
     return input;
 }
 
+int ratingValidation()
+{
+    int rating;
+    std::cout << "Enter your rating: ";
+    std::cin >> rating;
+    while (!std::cin.good() || rating < 1 || rating > 5)
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input. Please try again." << std::endl;
+        std::cout << "Enter your rating: ";
+        std::cin >> rating;
+    }
+    return rating;
+}
+
+int subjectValidation(Subject *&subjectArray, int &subjectArraySize)
+{
+    int subjectId;
+    std::cout << "Enter your subject ID: ";
+    std::cin >> subjectId;
+    while (!std::cin.good() || binarySearch(subjectArray, subjectArraySize, subjectId) == -1)
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input. Please try again." << std::endl;
+        std::cout << "Enter your subject ID: ";
+        std::cin >> subjectId;
+    }
+    return subjectId;
+}
+
+int centreValidation(Centre *&centreArray, int &centreArraySize)
+{
+    int centreId;
+    std::cout << "Enter your centre ID: ";
+    std::cin >> centreId;
+    while (!std::cin.good() || binarySearch(centreArray, centreArraySize, centreId) == -1)
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input. Please try again." << std::endl;
+        std::cout << "Enter your centre ID: ";
+        std::cin >> centreId;
+    }
+    return centreId;
+}
 // ---------------------------------------------- Dashboards ----------------------------------------------
 void displayHrMenu(User *userArray,
                    Subject *subjectArray,
@@ -305,16 +352,23 @@ void displayHrMenu(User *userArray,
             // view tutors sorted by ID
             if (tutorViewChoice == 1)
             {
+                displayTutorsList(tutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // view tutors sorted by hourly pay rate
             else if (tutorViewChoice == 2)
             {
+                Tutor *sortedTutorArray = cloneTutorArray(tutorArray, tutorArraySize);
+                quickSortHourlyPayRate(sortedTutorArray, 0, tutorArraySize - 1, subjectArray, subjectArraySize);
+                displayTutorsList(sortedTutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // view tutors sorted by rating
             else if (tutorViewChoice == 3)
             {
+                Tutor *sortedTutorArray = cloneTutorArray(tutorArray, tutorArraySize);
+                quickSortRatings(sortedTutorArray, 0, tutorArraySize - 1);
+                displayTutorsList(sortedTutorArray, tutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // back to main menu
@@ -337,16 +391,28 @@ void displayHrMenu(User *userArray,
             // filter by Rating
             else if (searchTutorChoice == 2)
             {
+                int ratingFiltered = ratingValidation();
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterRating(ratingFiltered, tutorArray, tutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // filter by Subject ID
             else if (searchTutorChoice == 3)
             {
+                int subjectIDFiltered = subjectValidation(subjectArray, subjectArraySize);
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterSubject(subjectIDFiltered, tutorArray, tutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // filter by Centre ID
             else if (searchTutorChoice == 4)
             {
+                int centreIDFiltered = centreValidation(centreArray, centreArraySize);
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterCentre(centreIDFiltered, tutorArray, tutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // back to main menu
@@ -446,16 +512,29 @@ void displayAdminMenu(int loginID,
             // view tutors sorted by ID
             if (tutorViewChoice == 1)
             {
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterCentre(centreArray[centreIndex].id, tutorArray, tutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // view tutors sorted by hourly pay rate
             else if (tutorViewChoice == 2)
             {
+                Tutor *sortedTutorArray = cloneTutorArray(tutorArray, tutorArraySize);
+                quickSortHourlyPayRate(sortedTutorArray, 0, tutorArraySize - 1, subjectArray, subjectArraySize);
+                int centreFilteredSortedTutorArraySize = 0;
+                Tutor *centreFilteredSortedTutorArray = tutorFilterCentre(centreArray[centreIndex].id, sortedTutorArray, tutorArraySize, centreFilteredSortedTutorArraySize);
+                displayTutorsList(centreFilteredSortedTutorArray, centreFilteredSortedTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // view tutors sorted by rating
             else if (tutorViewChoice == 3)
             {
+                Tutor *sortedTutorArray = cloneTutorArray(tutorArray, tutorArraySize);
+                quickSortRatings(sortedTutorArray, 0, tutorArraySize - 1);
+                int centreFilteredSortedTutorArraySize = 0;
+                Tutor *centreFilteredSortedTutorArray = tutorFilterCentre(centreArray[centreIndex].id, sortedTutorArray, tutorArraySize, centreFilteredSortedTutorArraySize);
+                displayTutorsList(centreFilteredSortedTutorArray, centreFilteredSortedTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             else
@@ -477,11 +556,23 @@ void displayAdminMenu(int loginID,
             // filter by Rating
             else if (searchTutorChoice == 2)
             {
+                int centreFilteredTutorArraySize = 0;
+                Tutor *centreFilteredTutorArray = tutorFilterCentre(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreFilteredTutorArraySize);
+                int ratingFiltered = ratingValidation();
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterRating(ratingFiltered, centreFilteredTutorArray, centreFilteredTutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             // filter by Subject ID
             else if (searchTutorChoice == 3)
             {
+                int centreFilteredTutorArraySize = 0;
+                Tutor *centreFilteredTutorArray = tutorFilterCentre(centreArray[centreIndex].id, tutorArray, tutorArraySize, centreFilteredTutorArraySize);
+                int subjectIDFiltered = subjectValidation(subjectArray, subjectArraySize);
+                int filteredTutorArraySize = 0;
+                Tutor *filteredTutorArray = tutorFilterSubject(subjectIDFiltered, centreFilteredTutorArray, centreFilteredTutorArraySize, filteredTutorArraySize);
+                displayTutorsList(filteredTutorArray, filteredTutorArraySize, centreArray, centreArraySize, subjectArray, subjectArraySize);
                 displayAdminMenu(loginID, userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
             }
             else

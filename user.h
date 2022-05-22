@@ -92,7 +92,7 @@ void displayUserList(User *&userArray, int &size)
                 if (arrayEnd)
                 {
                     std::cout << "This is the last page!" << std::endl;
-                    break;
+                    input = -1;
                 }
                 else
                 {
@@ -105,7 +105,7 @@ void displayUserList(User *&userArray, int &size)
                 if (page == 1)
                 {
                     std::cout << "This is the first page!" << std::endl;
-                    break;
+                    input = -1;
                 }
                 else
                 {

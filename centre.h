@@ -80,8 +80,8 @@ void displayCentreList(Centre *&centreArray, int &size)
             {
                 if (arrayEnd)
                 {
+                    input = -1;
                     std::cout << "This is the last page!" << std::endl;
-                    break;
                 }
                 else
                 {
@@ -93,8 +93,8 @@ void displayCentreList(Centre *&centreArray, int &size)
             {
                 if (page == 1)
                 {
+                    input = -1;
                     std::cout << "This is the first page!" << std::endl;
-                    break;
                 }
                 else
                 {
