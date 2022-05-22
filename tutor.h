@@ -105,7 +105,7 @@ void displayTutorsList(Tutor *&tutorArray, int &size, Centre *&centreArray, int 
                 std::cout << std::setw(10) << std::setfill(' ') << tutorArray[i].subjectId << " ";
                 index = binarySearch(subjectArray, subjectArraySize, tutorArray[i].subjectId);
                 std::cout << std::setw(15) << std::setfill(' ') << subjectArray[index].subjectName << " ";
-                std::cout << std::setw(16) << std::setfill(' ') << subjectArray[index].hourlyPayRate  << std::endl;
+                std::cout << std::setw(16) << std::setfill(' ') << subjectArray[index].hourlyPayRate << std::endl;
             }
             if (i == size)
             {
@@ -594,4 +594,79 @@ Tutor *tutorFilterRating(int rating, Tutor *tutorArray, int tutorArraySize, int 
         }
     }
     return filteredTutorArray;
+}
+
+// ---------------------------------------------------------------------------------- Sorting Tutor Functions ----------------------------------------------------------------------------------
+
+Tutor *cloneTutorArray(Tutor *array, int count)
+{
+    Tutor *ptr = new Tutor[count];
+    for (int i = 0; i < count; ++i)
+    {
+        ptr[i] = array[i];
+    }
+    return ptr;
+}
+
+void swap(Tutor *a, Tutor *b)
+{
+    Tutor temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// ---------------------------------------------------------------------------------- Sort by ratings ----------------------------------------------------------------------------------
+
+int partitionRatings(Tutor *array, int low, int high)
+{
+    float pivot = float(array[high].totalRatings) / float(array[high].ratingCount);
+    int i = low - 1;
+    for (int j = low; j <= high - 1; j++)
+    {
+        if ((float(array[j].totalRatings) / float(array[j].ratingCount)) <= pivot)
+        {
+            i++;
+            swap(&array[i], &array[j]);
+        }
+    }
+    swap(&array[i + 1], &array[high]);
+    return (i + 1);
+}
+
+void quickSortRatings(Tutor *array, int low, int high)
+{
+    if (low < high)
+    {
+        int partitionIndex = partitionRatings(array, low, high);
+        quickSortRatings(array, low, partitionIndex - 1);
+        quickSortRatings(array, partitionIndex + 1, high);
+    }
+}
+
+// ---------------------------------------------------------------------------------- Sort by hourly pay rate ----------------------------------------------------------------------------------
+
+int partitionHourlyPayRate(Tutor *array, int low, int high, Subject *subjectArray, int subjectArraySize)
+{
+    int pivot = subjectArray[binarySearch(subjectArray, subjectArraySize, array[high].subjectId)].hourlyPayRate;
+    int i = low - 1;
+    for (int j = low; j <= high - 1; j++)
+    {
+        if (subjectArray[binarySearch(subjectArray, subjectArraySize, array[j].subjectId)].hourlyPayRate <= pivot)
+        {
+            i++;
+            swap(&array[i], &array[j]);
+        }
+    }
+    swap(&array[i + 1], &array[high]);
+    return (i + 1);
+}
+
+void quickSortHourlyPayRate(Tutor *array, int low, int high, Subject *subjectArray, int subjectArraySize)
+{
+    if (low < high)
+    {
+        int partitionIndex = partitionHourlyPayRate(array, low, high, subjectArray, subjectArraySize);
+        quickSortHourlyPayRate(array, low, partitionIndex - 1, subjectArray, subjectArraySize);
+        quickSortHourlyPayRate(array, partitionIndex + 1, high, subjectArray, subjectArraySize);
+    }
 }
