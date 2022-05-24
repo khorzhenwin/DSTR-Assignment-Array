@@ -265,7 +265,7 @@ void updateCentre(Centre *&centreArray, int &centreSize, User *&userArray, int &
                 std::cout << "Enter the admin id: ";
                 std::cin >> adminId;
             }
-            else if (adminExist != -1)
+            else if (adminExist != -1 && centreArray[adminExist].adminId != adminId)
             {
                 std::cout << "Admin is already in charge of a centre" << std::endl;
                 std::cout << "Enter the admin id: ";
