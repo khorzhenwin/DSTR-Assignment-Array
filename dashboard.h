@@ -1,16 +1,16 @@
 #pragma once
 #include "functions.h"
 
-void generateReport(User* userArray,
-    Subject* subjectArray,
-    Centre* centreArray,
-    Tutor* tutorArray,
-    Archive* archiveArray,
-    int& userArraySize,
-    int& subjectArraySize,
-    int& centreArraySize,
-    int& tutorArraySize,
-    int& archiveArraySize)
+void generateReport(User *userArray,
+                    Subject *subjectArray,
+                    Centre *centreArray,
+                    Tutor *tutorArray,
+                    Archive *archiveArray,
+                    int &userArraySize,
+                    int &subjectArraySize,
+                    int &centreArraySize,
+                    int &tutorArraySize,
+                    int &archiveArraySize)
 {
     system("cls");
     int activeTutors = 0;
@@ -33,7 +33,7 @@ void generateReport(User* userArray,
     std::cout << "   Terminated: " << tutorArraySize - activeTutors << std::endl;
     std::cout << "   Archived: " << archiveArraySize << std::endl;
     std::cout << std::endl
-        << "-----------------------------------------------------" << std::endl;
+              << "-----------------------------------------------------" << std::endl;
     std::cout << "Centre Details" << std::endl;
     std::cout << "-----------------------------------------------------" << std::endl;
 
@@ -45,7 +45,7 @@ void generateReport(User* userArray,
     for (int i = 0; i < centreArraySize; ++i)
     {
         std::cout << std::endl
-            << "-----------------------------------------------------" << std::endl;
+                  << "-----------------------------------------------------" << std::endl;
         std::cout << "Centre Name : " << centreArray[i].centreName << std::endl;
         std::cout << "-----------------------------------------------------" << std::endl;
         std::cout << "   Tutors by Subjects" << std::endl;
@@ -84,16 +84,15 @@ void generateReport(User* userArray,
         std::cout << "   Active: " << activeTutorsByCentre << std::endl;
         std::cout << "   Terminated: " << terminatedTutorsByCentre << std::endl;
         std::cout << "-----------------------------------------------------" << std::endl
-            << std::endl;
+                  << std::endl;
         // re-initializing for next iteration
         activeTutorsByCentre = 0;
         terminatedTutorsByCentre = 0;
     }
     std::cout << std::endl
-        << std::endl
-        << std::endl;
+              << std::endl
+              << std::endl;
 }
-
 
 int manageObject(int choice)
 {
@@ -308,7 +307,7 @@ void displayHrMenu(User *userArray,
     std::cout << "Enter your choice: ";
     std::cin >> input;
 
-    while (!std::cin.good() || input < 1 || input > 7)
+    while (!std::cin.good() || input < 1 || input > 8)
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -553,14 +552,13 @@ void displayHrMenu(User *userArray,
         displayArchiveList(archiveArray, archiveArraySize);
         displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     case 7:
-         generateReport(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
+        generateReport(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
         displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     case 8:
         std::cout << "Exiting program..." << std::endl;
         exit(0);
         break;
         return;
-
     }
 }
 
