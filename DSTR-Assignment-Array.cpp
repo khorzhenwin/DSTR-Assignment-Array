@@ -38,7 +38,7 @@ void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreA
     centreArray[1] = Centre(1, 1, "Centre 2", "Sri Petaling", 5);
     centreArray[2] = Centre(2, 2, "Centre 3", "Kuchai Lama", 6);
 
-    tutorArray[0] = Tutor(0, 0, "Alan Doe", "ParkHill, Bukit Jalil", "+60123456789", "15/03/2020", "15/03/2021", 100, 20, 0, 0);
+    tutorArray[0] = Tutor(0, 0, "Alan Doe", "ParkHill, Bukit Jalil", "+60123456789", "15/03/2020", "15/05/2022", 100, 20, 0, 0);
     tutorArray[1] = Tutor(1, 1, "Alfred Wyoming", "Pinnacle, Sri Petaling", "+60123456788", "03/08/2021", "", 80, 20, 0, 1);
     tutorArray[2] = Tutor(2, 2, "Alfonso Lee", "Old Klang Road, Kuchai Lama", "+60123456787", "15/03/2020", "", 95, 20, 0, 2);
     tutorArray[3] = Tutor(3, 3, "Altaria Lim", "SS15, Subang Jaya", "+60123456786", "15/03/2020", "15/03/2021", 75, 20, 0, 3);
@@ -53,7 +53,7 @@ void generateMockData(User *&userArray, Subject *&subjectArray, Centre *&centreA
     tutorArray[10] = Tutor(10, 10, "Clarence Tee", "ParkHill, Bukit Jalil", "+60123456719", "15/03/2020", "15/03/2021", 100, 20, 2, 0);
     tutorArray[11] = Tutor(11, 11, "Cassandrea Teo", "Pinnacle, Sri Petaling", "+60123456718", "03/08/2021", "", 80, 20, 2, 1);
     tutorArray[12] = Tutor(12, 12, "Christina Tan", "Old Klang Road, Kuchai Lama", "+60123456717", "15/03/2020", "", 95, 20, 2, 2);
-    tutorArray[13] = Tutor(13, 13, "Chrysan Kok", "SS15, Subang Jaya", "+60123456716", "15/03/2020", "15/03/2021", 75, 20, 2, 3);
+    tutorArray[13] = Tutor(13, 13, "Chrysan Kok", "SS15, Subang Jaya", "+60123456716", "15/03/2020", "15/05/2022", 75, 20, 2, 3);
     tutorArray[14] = Tutor(14, 14, "Coconut Tree", "Taman OUG, Kuala Lumpur", "+60123456715", "03/08/2021", "", 82, 20, 2, 4);
 };
 

@@ -1,6 +1,100 @@
 #pragma once
 #include "functions.h"
 
+void generateReport(User* userArray,
+    Subject* subjectArray,
+    Centre* centreArray,
+    Tutor* tutorArray,
+    Archive* archiveArray,
+    int& userArraySize,
+    int& subjectArraySize,
+    int& centreArraySize,
+    int& tutorArraySize,
+    int& archiveArraySize)
+{
+    system("cls");
+    int activeTutors = 0;
+
+    for (int i = 0; i < tutorArraySize; ++i)
+    {
+        if (tutorArray[i].dateTerminated == "")
+        {
+            activeTutors++;
+        }
+    }
+
+    std::cout << "eXcel Tuition Centre Report on " << getDateToday() << std::endl;
+    std::cout << "-----------------------------------------------------" << std::endl;
+    std::cout << "Total number of users: " << userArraySize << std::endl;
+    std::cout << "Total number of centres: " << centreArraySize << std::endl;
+    std::cout << "Total number of subjects: " << subjectArraySize << std::endl;
+    std::cout << "Total number of tutors " << std::endl;
+    std::cout << "   Active: " << activeTutors << std::endl;
+    std::cout << "   Terminated: " << tutorArraySize - activeTutors << std::endl;
+    std::cout << "   Archived: " << archiveArraySize << std::endl;
+    std::cout << std::endl
+        << "-----------------------------------------------------" << std::endl;
+    std::cout << "Centre Details" << std::endl;
+    std::cout << "-----------------------------------------------------" << std::endl;
+
+    int activeTutorsByCentre = 0;
+    int terminatedTutorsByCentre = 0;
+    int activeTutorsBySubject = 0;
+    int terminatedTutorsBySubject = 0;
+
+    for (int i = 0; i < centreArraySize; ++i)
+    {
+        std::cout << std::endl
+            << "-----------------------------------------------------" << std::endl;
+        std::cout << "Centre Name : " << centreArray[i].centreName << std::endl;
+        std::cout << "-----------------------------------------------------" << std::endl;
+        std::cout << "   Tutors by Subjects" << std::endl;
+        for (int s = 0; s < subjectArraySize; ++s)
+        {
+            for (int t = 0; t < tutorArraySize; ++t)
+            {
+                if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated == "" && tutorArray[t].subjectId == subjectArray[s].id)
+                {
+                    activeTutorsBySubject++;
+                    if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated == "")
+                    {
+                        activeTutorsByCentre++;
+                    }
+                }
+                else if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated != "" && tutorArray[t].subjectId == subjectArray[s].id)
+                {
+                    terminatedTutorsBySubject++;
+                    if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated != "")
+                    {
+                        terminatedTutorsByCentre++;
+                    }
+                }
+            }
+            //------ print out statements for each subject here ------
+            std::cout << "      Subject Name : " << subjectArray[s].subjectName << std::endl;
+            std::cout << "         Active Tutors: " << activeTutorsBySubject << std::endl;
+            std::cout << "         Terminated Tutors: " << terminatedTutorsBySubject << std::endl;
+            std::cout << "-----------------------------------------------------" << std::endl;
+            // reset for next iteration
+            activeTutorsBySubject = 0;
+            terminatedTutorsBySubject = 0;
+        }
+        //------ print out statements for each centre here ------
+        std::cout << "Total Tutors in Centre" << std::endl;
+        std::cout << "   Active: " << activeTutorsByCentre << std::endl;
+        std::cout << "   Terminated: " << terminatedTutorsByCentre << std::endl;
+        std::cout << "-----------------------------------------------------" << std::endl
+            << std::endl;
+        // re-initializing for next iteration
+        activeTutorsByCentre = 0;
+        terminatedTutorsByCentre = 0;
+    }
+    std::cout << std::endl
+        << std::endl
+        << std::endl;
+}
+
+
 int manageObject(int choice)
 {
     std::string object = "";
@@ -207,7 +301,8 @@ void displayHrMenu(User *userArray,
     std::cout << "4 - Manage Tutors" << std::endl;
     std::cout << "5 - Add Ratings" << std::endl;
     std::cout << "6 - View Tutor Archive" << std::endl;
-    std::cout << "7 - Exit Program" << std::endl;
+    std::cout << "7 - Generate Report" << std::endl;
+    std::cout << "8 - Exit Program" << std::endl;
 
     int input;
     std::cout << "Enter your choice: ";
@@ -458,10 +553,14 @@ void displayHrMenu(User *userArray,
         displayArchiveList(archiveArray, archiveArraySize);
         displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
     case 7:
+         generateReport(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
+        displayHrMenu(userArray, subjectArray, centreArray, tutorArray, archiveArray, userArraySize, subjectArraySize, centreArraySize, tutorArraySize, archiveArraySize);
+    case 8:
         std::cout << "Exiting program..." << std::endl;
         exit(0);
         break;
         return;
+
     }
 }
 
