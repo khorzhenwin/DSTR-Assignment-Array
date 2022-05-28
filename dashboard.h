@@ -56,18 +56,12 @@ void generateReport(User *userArray,
                 if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated == "" && tutorArray[t].subjectId == subjectArray[s].id)
                 {
                     activeTutorsBySubject++;
-                    if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated == "")
-                    {
-                        activeTutorsByCentre++;
-                    }
+                    activeTutorsByCentre++;
                 }
                 else if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated != "" && tutorArray[t].subjectId == subjectArray[s].id)
                 {
                     terminatedTutorsBySubject++;
-                    if (tutorArray[t].centreId == centreArray[i].id && tutorArray[t].dateTerminated != "")
-                    {
-                        terminatedTutorsByCentre++;
-                    }
+                    terminatedTutorsByCentre++;
                 }
             }
             //------ print out statements for each subject here ------
